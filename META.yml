@@ -4,11 +4,9 @@ author:
   - unknown
 build_requires:
   ExtUtils::MakeMaker: 0
-configure_requires:
-  ExtUtils::MakeMaker: 0
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 6.6501, CPAN::Meta::Converter version 2.130880'
-license: unknown
+generated_by: 'ExtUtils::MakeMaker version 6.78, CPAN::Meta::Converter version 2.132661'
+license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
@@ -17,5 +15,6 @@ no_index:
   directory:
     - t
     - inc
-requires: {}
-version: 0.03
+resources:
+  repository: git://github.com/neilbowers/Crypt-RandPasswd.git
+version: 0.04

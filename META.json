@@ -4,9 +4,9 @@
       "unknown"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.6501, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "ExtUtils::MakeMaker version 6.78, CPAN::Meta::Converter version 2.132661",
    "license" : [
-      "unknown"
+      "perl_5"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
@@ -24,16 +24,15 @@
          "requires" : {
             "ExtUtils::MakeMaker" : "0"
          }
-      },
-      "configure" : {
-         "requires" : {
-            "ExtUtils::MakeMaker" : "0"
-         }
-      },
-      "runtime" : {
-         "requires" : {}
       }
    },
    "release_status" : "stable",
-   "version" : "0.03"
+   "resources" : {
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/neilbowers/Crypt-RandPasswd.git",
+         "web" : "https://github.com/neilbowers/Crypt-RandPasswd"
+      }
+   },
+   "version" : "0.04"
 }
