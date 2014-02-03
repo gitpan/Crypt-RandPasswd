@@ -3,11 +3,13 @@
 
 package Crypt::RandPasswd;
 
+use 5.006;
 use strict;
+use warnings;
 
 use vars qw($VERSION);
 
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 
 =head1 NAME
@@ -1425,7 +1427,7 @@ sub word($$) {
 
 Generates a string of random letters.
 The length of the returned word is between minlen and maxlen.  
-Calls C<random_chars_in_range( 'a' => 'z' )>.
+Calls C<random_chars_in_range( 'a' =E<gt> 'z' )>.
 
 =cut
 
@@ -1442,7 +1444,7 @@ sub letters($$) {
 
 Generates a string of random printable characters.
 The length of the returned word is between minlen and maxlen.  
-Calls C<random_chars_in_range( '!' => '~' )>.
+Calls C<random_chars_in_range( '!' =E<gt> '~' )>.
 
 =cut
 
@@ -1596,16 +1598,15 @@ sub init() {
 
 
 
-
-=head2 _random_word
-
-This is the routine that returns a random word.
-It collects random syllables until a predetermined word length is found. 
-If a retry threshold is reached, another word is tried.  
-
-returns ( word, hyphenated_word ).
-
-=cut
+# 
+# _random_word
+# 
+# This is the routine that returns a random word.
+# It collects random syllables until a predetermined word length is found. 
+# If a retry threshold is reached, another word is tried.  
+# 
+# returns ( word, hyphenated_word ).
+# 
 
 sub _random_word($) {
     my( $pwlen ) = @_;
@@ -1676,23 +1677,22 @@ sub _random_word($) {
 }
 
 
-
-=head2 _random_unit
-
-Selects a gram (aka "unit").
-This is the standard random unit generating routine for get_syllable().  
-
-This routine attempts to return grams (units) with a distribution
-approaching that of the distribution of the units in English. 
-
-The distribution of the units may be altered in this procedure without
-affecting the digram table or any other programs using the random_word subroutine,
-as long as the set of grams (units) is kept consistent throughout this library.
-
-I<NOTE that where this func used to return a numeric index into
-the 'rules' C-array, it now returns a gram.>
-
-=cut
+# 
+# _random_unit
+# 
+# Selects a gram (aka "unit").
+# This is the standard random unit generating routine for get_syllable().  
+# 
+# This routine attempts to return grams (units) with a distribution
+# approaching that of the distribution of the units in English. 
+# 
+# The distribution of the units may be altered in this procedure without
+# affecting the digram table or any other programs using the random_word subroutine,
+# as long as the set of grams (units) is kept consistent throughout this library.
+# 
+# I<NOTE that where this func used to return a numeric index into
+# the 'rules' C-array, it now returns a gram.>
+# 
 
 my %occurrence_frequencies = (
     'a'  => 10,      'b'  =>  8,      'c'  => 12,      'd'  => 12,      
@@ -1730,23 +1730,22 @@ sub _random_unit($) {
 
 
 
-
-=head2 _improper_word
-
-Check that the word does not contain illegal combinations
-that may span syllables.  Specifically, these are:
-
-  1. An illegal pair of units between syllables.
-  2. Three consecutive vowel units.
-  3. Three consecutive consonant units.
-
-The checks are made against units (1 or 2 letters), not against
-the individual letters, so three consecutive units can have
-the length of 6 at most.
-
-returns boolean
-
-=cut
+# 
+# _improper_word
+# 
+# Check that the word does not contain illegal combinations
+# that may span syllables.  Specifically, these are:
+# 
+#   1. An illegal pair of units between syllables.
+#   2. Three consecutive vowel units.
+#   3. Three consecutive consonant units.
+# 
+# The checks are made against units (1 or 2 letters), not against
+# the individual letters, so three consecutive units can have
+# the length of 6 at most.
+# 
+# returns boolean
+# 
 
 sub _improper_word(@) {
     my @units = @_;
@@ -1802,15 +1801,15 @@ sub _improper_word(@) {
 }
 
 
-=head2 _have_initial_y
-
-Treating y as a vowel is sometimes a problem.  Some words get formed that look irregular.  
-One special group is when y starts a word and is the only vowel in the first syllable.
-The word ycl is one example.  We discard words like these.
-
-return boolean
-
-=cut
+# 
+# _have_initial_y
+# 
+# Treating y as a vowel is sometimes a problem.  Some words get formed that look irregular.  
+# One special group is when y starts a word and is the only vowel in the first syllable.
+# The word ycl is one example.  We discard words like these.
+# 
+# return boolean
+# 
 
 sub _have_initial_y(@) {
     my @units = @_;
@@ -1839,18 +1838,17 @@ sub _have_initial_y(@) {
     ($vowel_count <= 1) && ($normal_vowel_count == 0)
 }
 
-
-=head2 _have_final_split
-
-Besides the problem with the letter y, there is one with
-a silent e at the end of words, like face or nice. 
-We allow this silent e, but we do not allow it as the only
-vowel at the end of the word or syllables like ble will
-be generated.
-
-returns boolean
-
-=cut
+# 
+# _have_final_split
+# 
+# Besides the problem with the letter y, there is one with
+# a silent e at the end of words, like face or nice. 
+# We allow this silent e, but we do not allow it as the only
+# vowel at the end of the word or syllables like ble will
+# be generated.
+# 
+# returns boolean
+# 
 
 sub _have_final_split(@) {
     my @units = @_;
@@ -2343,17 +2341,16 @@ local *ALLOWED = sub {
 } # sub get_syllable
 
 
-
-=head2 alt_get_syllable
-
-Takes an integer, the maximum number of chars to generate. (or is it minimum?)
-
-returns a list of ( string, units-in-syllable )
-
-I<This is an alternative version of C<get_syllable()>, which
-can be useful for unit testing the other functions.>
-
-=cut
+#
+# alt_get_syllable
+# 
+# Takes an integer, the maximum number of chars to generate. (or is it minimum?)
+# 
+# returns a list of ( string, units-in-syllable )
+# 
+# I<This is an alternative version of C<get_syllable()>, which
+# can be useful for unit testing the other functions.>
+# 
 
 sub alt_get_syllable($) { # alternative version, has no smarts.
    my $pwlen = shift; # max or min?
@@ -2372,18 +2369,18 @@ sub alt_get_syllable($) { # alternative version, has no smarts.
 }
 
 
-=head2 _illegal_placement
-
-goes through an individual syllable and checks for illegal
-combinations of letters that go beyond looking at digrams. 
-
-We look at things like 3 consecutive vowels or consonants,
-or syllables with consonants between vowels
-(unless one of them is the final silent e).
-
-returns boolean.
-
-=cut
+#
+# _illegal_placement
+#
+# goes through an individual syllable and checks for illegal
+# combinations of letters that go beyond looking at digrams. 
+# 
+# We look at things like 3 consecutive vowels or consonants,
+# or syllables with consonants between vowels
+# (unless one of them is the final silent e).
+# 
+# returns boolean.
+#
 
 sub _illegal_placement(@) {
     my @units = @_;
@@ -2474,17 +2471,6 @@ sub _illegal_placement(@) {
 
 }
 
-=head1 AUTHOR
-
-JDPORTER@cpan.org (John Porter)
-
-=head1 COPYRIGHT
-
-This perl module is free software; it may be redistributed and/or modified 
-under the same terms as Perl itself.
-
-=cut
-
 unless ( defined caller ) {
 
 # this can be used for unit testing or to make the module a stand-alone program.
@@ -2528,4 +2514,18 @@ for ( 1 .. $num_words ) {
 } # end of 'main' code.
 
 1;
+
+
+=head1 AUTHOR
+
+JDPORTER@cpan.org (John Porter)
+
+Now maintained by Neil Bowers E<lt>neilb@cpan.orgE<gt>
+
+=head1 COPYRIGHT
+
+This perl module is free software; it may be redistributed and/or modified 
+under the same terms as Perl itself.
+
+=cut
 
