@@ -1,4 +1,3 @@
-
 {
 
 package Crypt::RandPasswd;
@@ -9,7 +8,7 @@ use warnings;
 
 use vars qw($VERSION);
 
-$VERSION = '0.05';
+$VERSION = '0.06';
 
 
 =head1 NAME
@@ -28,18 +27,13 @@ Crypt::RandPasswd - random password generator based on FIPS-181
   *Crypt::RandPasswd::rng = \&my_random_number_generator;
   *Crypt::RandPasswd::restrict = \&my_restriction_filter;
 
-=head2 Run as Script
-
-  perl Crypt/RandPasswd.pm -help
-
-=head1 SEE ALSO
-
-FIPS 181 - (APG), Automated Password Generator:
-http://www.itl.nist.gov/fipspubs/fip181.htm
-
 =head1 DESCRIPTION
 
-This code is a Perl language implementation of the Automated
+Crypt::RandPasswd provides three functions that can be used
+to generate random passwords, constructed from words,
+letters, or characters.
+
+This code is a Perl implementation of the Automated
 Password Generator standard, like the program described in
 "A Random Word Generator For Pronounceable Passwords" (not available on-line). 
 This code is a re-engineering of the program contained in Appendix A
@@ -2085,7 +2079,7 @@ local *ALLOWED = sub {
 
                     if ($current_unit == 1) {
                         #
-                        # Reject the unit if we are at te starting digram of
+                        # Reject the unit if we are at the starting digram of
                         # a syllable and it does not fit.
                         #
                         if (ALLOWED(NOT_FRONT)) {
@@ -2515,6 +2509,21 @@ for ( 1 .. $num_words ) {
 
 1;
 
+=head1 SEE ALSO
+
+L<CPAN modules for generating passwords|http://neilb.org/reviews/passwords.html> - a review of modules of CPAN for random password generation.
+
+Some of the better modules:
+L<App::Genpass>, L<Crypt::XkcdPassword>,
+L<Crypt::YAPassGen>, L<Data::Random>,
+L<String::Random>.
+
+FIPS 181 - (APG), Automated Password Generator:
+http://www.itl.nist.gov/fipspubs/fip181.htm
+
+=head1 REPOSITORY
+
+L<https://github.com/neilbowers/Crypt-RandPasswd>
 
 =head1 AUTHOR
 
